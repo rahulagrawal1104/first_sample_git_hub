@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	</http:request-config>
 	<flow name="sample_git_hub_apiFlow" doc:id="4a121c19-04ed-425c-8403-dfa11f8e8f96" >
 		<http:listener doc:name="Listener" doc:id="41b592cb-d89f-4945-83c4-b7be8e0852ab" config-ref="HTTP_Listener_config" path="/git"/>
-		<set-payload value='#["hello, its sample git hub project   nahi ..jjjjjjjjj."]' doc:name="Set Payload" doc:id="579cdf86-dc91-48d3-8444-a8931b8da5f0" />
+		<set-payload value='#["hello, its sample git hub projecgggggggggggggt   nahi ..jjjjjjjjj."]' doc:name="Set Payload" doc:id="579cdf86-dc91-48d3-8444-a8931b8da5f0" />
 		<logger level="INFO" doc:name="Logger" doc:id="dd2a29d8-9599-4397-8f52-7b44d29b5cca" message='#["payload is " ++ payload]'/>
 		<http:request method="GET" doc:name="Request_fail" doc:id="73b27468-9b78-4e44-b0c2-447599ae30de" url="http://first-full-life-proxy.us-e2.cloudhub.io/name" config-ref="HTTP_Request_configuration"/>
 		<logger level="INFO" doc:name="Logger" doc:id="02efb45c-bf8f-492f-a8ec-56bb0ee649d8" message='#["hehehheheheheh"]'/>
