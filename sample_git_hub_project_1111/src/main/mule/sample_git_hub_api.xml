@@ -20,5 +20,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 		<logger level="INFO" doc:name="Logger" doc:id="dd2a29d8-9599-4397-8f52-7b44d29b5cca" message='#["payload is " ++ payload]'/>
 		<http:request method="GET" doc:name="Request_fail" doc:id="73b27468-9b78-4e44-b0c2-447599ae30de" url="http://first-full-life-proxy.us-e2.cloudhub.io/name" config-ref="HTTP_Request_configuration"/>
 		<logger level="INFO" doc:name="Logger" doc:id="02efb45c-bf8f-492f-a8ec-56bb0ee649d8" message='#["hehehheheheheh"]'/>
+		<logger level="INFO" doc:name="Logger" doc:id="a4fd91ba-af30-4ef6-a0b3-c2d52a4df12c" message='#["jjj"]'/>
 	</flow>
 </mule>
