@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xml-module="http://www.mulesoft.org/schema/mule/xml-module" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/xml-module http://www.mulesoft.org/schema/mule/xml-module/current/mule-xml-module.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="88e939cd-686b-46c3-9e73-52f7a26a2c1d" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<xml-module:config name="XML_Config" doc:name="XML Config" doc:id="bd1ed884-784e-4add-9e3b-fa41439a65a7" />
+	<flow name="mule_xml_moduleFlow" doc:id="0a6ad88f-ec56-4b93-a17f-51bdad455271" >
+		<http:listener doc:name="Listener" doc:id="ca85cae3-f200-4044-92ac-105dcfabb6eb" config-ref="HTTP_Listener_config" path="/xml"/>
+		<logger level="INFO" doc:name='"hello, 1st logger"' doc:id="381bb6b4-4507-41d4-88cd-ff1b028e35e8" message='#["hello, 1st logger"]'/>
+		<xml-module:validate-schema doc:name="Validate schema" doc:id="ae6d10d9-83aa-4f38-948d-b5219c4e72fa" config-ref="XML_Config" schemas="sample12345.xsd"/>
+		<logger level="INFO" doc:name="payload" doc:id="784134d7-da1f-466b-8923-ef8d7cb95477" message="#[payload]"/>
+		<xml-module:xslt-transform doc:name="Xslt transform" doc:id="2e6ca7e3-d9e3-4d78-aed0-8701f71a463d" config-ref="XML_Config">
+			<xml-module:xslt ><![CDATA[<xsl:stylesheet version="1.0"
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+ <xsl:output omit-xml-declaration="yes"/>
+
+    <xsl:template match="node()|@*">
+      <xsl:copy>
+         <xsl:apply-templates select="node()|@*"/>
+      </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="catalog/book[@id='bk101']"/>
+</xsl:stylesheet>]]></xml-module:xslt>
+		</xml-module:xslt-transform>
+		<logger level="INFO" doc:name="Logger" doc:id="e81f63a4-ed92-4482-8c82-a919f99e9f80" message="#[payload]"/>
+		<xml-module:xpath-extract doc:name="Xpath extract" doc:id="8b4ae71f-8fa1-4bbe-bb93-4c0cfe943840" config-ref="XML_Config" xpath="catalog/book/author"/>
+		<logger level="INFO" doc:name="Logger" doc:id="cc89e094-6b92-414d-b149-afa20d88497b" message="#[payload]"/>
+		<ee:transform doc:name="payload" doc:id="6ae1498e-2159-45ef-9a70-76f08b17e4da" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
